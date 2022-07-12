@@ -1,6 +1,8 @@
 # numbertotext
+[![codecov](https://codecov.io/gh/Sylvaner/NumberToText/branch/main/graph/badge.svg?token=Qc5mixBbjj)](https://codecov.io/gh/Sylvaner/NumberToText)
+[![action](https://github.com/Sylvaner/numbertotext/actions/workflows/workflow.yml/badge.svg)](https://github.com/Sylvaner/numbertotext/actions)
 
-Python module to convert numbers to text.
+Python module that convert numbers to text.
 
 Available language : 
 * French

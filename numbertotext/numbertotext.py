@@ -14,6 +14,7 @@ A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 simple_numbers = {
     '0': 'zéro',
     '1': 'un',
@@ -68,21 +69,35 @@ big_names = {
 
 def numbertotext(number):
     """Convert number to full text
-    :param number: Number to convert
-    :type number:  number
-    :return:       Full text number
-    :rtype:    str
+
+    Parameters
+    ----------
+    number : int
+        Number to convert
+
+    Returns
+    -------
+    str
+        Text version of the number
     """
     return convert(str(number), '', '')
 
 def convert(number, previous_text, trailing):
-    """Main recursiv function for number to full text conversion
-    :param number:         Current number to convert
-    :param previous_text:  Previous text with left digits
-    :param trailing:       Trailing digits (if call on part of the number)
-    :type number:          str
-    :type previous_text:   str
-    :type trailing:        str
+    """Main recursive function that convert number to full text conversion
+
+    Parameters
+    ----------
+    number : str
+        Number to convert (numeric format)
+    previous_text : str
+        Digits encoded buffer
+    trailing : str
+        Digits to encode after this number
+
+    Returns
+    -------
+    str
+        Text version of the number
     """
     to_add = ''
     if number in simple_numbers:
@@ -94,17 +109,23 @@ def convert(number, previous_text, trailing):
     if len(number) == 3:
         to_add = convert_hundreds(number, trailing)
         number = number[1:]
-    else: # len(number) <= 12:
+    else:
         [to_add, number] = big_numbers(number)
     previous_text = concat_data(previous_text, to_add)
     return convert(number, previous_text, '')
 
 def big_numbers(number):
     """Convert big numbers (1000 to 999 999 999 999)
-    :param number: Number to convert
-    :param type:   str
-    :return:       Converted number
-    :rtype:        str
+
+    Parameters
+    ----------
+    number : str
+        Number to convert
+
+    Returns
+    -------
+    str
+        Text version of the number
     """
     number_range = ((len(number) - 1) // 3) * 3
     number_part = len(number) - number_range
@@ -122,10 +143,16 @@ def big_numbers(number):
 
 def convert_tens(number):
     """Convert number with two digits
-    :param number: Number with three digits
-    :type:         str
-    :return:       Full text number
-    :rtype:        str
+
+    Parameters
+    ----------
+    number : str
+        2 digits number
+
+    Returns
+    -------
+    str
+        Text version of the number
     """
     if number in simple_numbers:
         return simple_numbers[number]
@@ -152,21 +179,31 @@ def convert_tens(number):
 
 def only_zeros_left(number):
     """Test if only zeros left in number
-    :param number: Number to test
-    :type number:  str
-    :return:       True if number contains only zeros
-    :rtype:        boolean
+
+    Parameters
+    ----------
+    number : str
+        Number to test
+
+    Returns
+    -------
+    bool
+        True if number contains only zero
     """
     return '0' * len(number) == number
 
 def convert_hundreds(number, trailing):
     """Convert number with three digits
-    :param number:   Number with three digits
-    :param trailing: Trailing digits
-    :type number:    str
-    :type trailing:  str
-    :return:         Full text number
-    :rtype:          str
+
+    Parameters
+    ----------
+    number : str
+        3 digits number
+
+    Returns
+    -------
+    str
+        Text version of the number
     """
     result = ''
     if number[0] == '0':
@@ -182,6 +219,18 @@ def convert_hundreds(number, trailing):
 
 def concat_data(current, data_to_add):
     """Concat number with previous text
+
+    Parameters
+    ----------
+    current : str
+        Current state of the text
+    data_to_add : str
+        Data to add at the end of the text
+
+    Returns
+    -------
+    str
+        Text version of the number
     """
     if current == '':
         return data_to_add
