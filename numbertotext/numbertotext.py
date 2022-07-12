@@ -140,15 +140,14 @@ def convert_tens(number):
         return ten_text
 
     unit_text = simple_numbers[number[1]]
-    if ten_number == 7 or ten_number == 9:
-        # Special case for 7x and 9x (60 and 11 for 71)
-        unit_text = simple_numbers[str(10 + unit_number)]
-    elif ten_number >= 2 and ten_number <= 6 and unit_number == 1:
-        # Special case for 21, 31, ..., 61, (30 and 1)
-        unit_text = 'et-' + unit_text
-    if ten_number == 7 or ten_number == 9:
+    if ten_number in (7, 9):
         # Special case for 70 and 90 (60-10 => 70, 80-10 => 90)
         ten_text = tens[ten_number - 1]
+        # Special case for 7x and 9x (60 and 11 for 71)
+        unit_text = simple_numbers[str(10 + unit_number)]
+    elif 2 <= ten_number <= 6 and unit_number == 1:
+        # Special case for 21, 31, ..., 61, (30 and 1)
+        unit_text = 'et-' + unit_text
     return ten_text + '-' + unit_text
 
 def only_zeros_left(number):
@@ -172,7 +171,7 @@ def convert_hundreds(number, trailing):
     result = ''
     if number[0] == '0':
         return ''
-    elif number[0] == '1':
+    if number[0] == '1':
         result = simple_numbers['100']
     else:
         result = simple_numbers[number[0]] + '-cent'
@@ -186,7 +185,6 @@ def concat_data(current, data_to_add):
     """
     if current == '':
         return data_to_add
-    elif data_to_add != '':
+    if data_to_add != '':
         return current + '-' + data_to_add
-    else:
-        return current
+    return current
